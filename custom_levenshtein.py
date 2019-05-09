@@ -1,18 +1,25 @@
 import numpy as np
 
+
 # n is the maximum length of a word
 n = 100
 invx = np.array(range(1,n+1))
-weights = np.ones(n) / (invx ** 1.5)
+weights_pol = np.ones(n) / (invx ** 1.5)
+weights_exp = np.exp(-(invx - 1))
 
 # if reverse, letters in the beginning of a word have more weight
 # otherwise, letters in the end of a word have more weight
 # the weight decays with the function 1/x^1.5 of indices 
 # counted from the end/beginning
 
-def levenshtein(s1, s2, reverse=False):
+def levenshtein(s1, s2, reverse=False, exp=False):
+    if exp:
+        weights = weights_exp
+    else:
+        weights = weights_pol
+
     if len(s1) < len(s2):
-        return levenshtein(s2, s1,reverse=reverse)
+        return levenshtein(s2, s1,reverse=reverse, exp=exp)
 
     # len(s1) >= len(s2)
     if len(s2) == 0:
