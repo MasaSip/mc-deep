@@ -111,23 +111,13 @@ class TranslationDataset(Dataset):
         output_seq = tensorFromSentence(self.output_lang, pair[1])
         return (input_seq, output_seq)
 
-
-def unicodeToAscii(s):
-    return ''.join(
-        c for c in unicodedata.normalize('NFD', s)
-        if unicodedata.category(c) != 'Mn'
-    )
-
 # Lowercase, trim, and remove non-letter characters
 
-
 def normalizeString(s):
-    #s = unicodeToAscii(s.lower().strip())
-    #s = re.sub(r"([.!?])", r" \1", s)
-    #s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
+    s = s.lower().strip()
+    s = re.sub(r"([.!?])", r" \1", s)
+    s = re.sub(r"[^a-zA-ZåäöÅÄÖ.!?']+", r" ", s)
     return s
-
-re.sub(r"[^a-zA-Z.!?]+", r" ", "Äiti")
 
 def readLangs(path, lang1, lang2, reverse=False):
     print("Reading lines...")
