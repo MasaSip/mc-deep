@@ -13,33 +13,44 @@ weights_exp = np.exp(-(invx - 1))
 # counted from the end/beginning
 
 def levenshtein(s1, s2, reverse=False, exp=False):
-    if exp:
-        weights = weights_exp
-    else:
-        weights = weights_pol
+	if exp:
+		weights = weights_exp
+	else:
+		weights = weights_pol
 
-    if len(s1) < len(s2):
-        return levenshtein(s2, s1,reverse=reverse, exp=exp)
+	if reverse:
+		s1 = s1[::-1]
+		s2 = s2[::-1]
 
-    # len(s1) >= len(s2)
-    if len(s2) == 0:
-        return len(s1)
+	if len(s1) < len(s2):
+		return custom_levenshtein(s2, s1, weights)
+	elif len(s1) == len(s2):
+		d1 = custom_levenshtein(s1, s2, weights)
+		d2 = custom_levenshtein(s2, s1, weights)
+		return min(d1, d2)
+	else:
+		return custom_levenshtein(s1, s2, weights)
 
-    if reverse:
-        s1 = s1[::-1]
-        s2 = s2[::-1]
 
-    previous_row = range(len(s2) + 1)
-    for i, c1 in enumerate(s1):
-        current_row = [i + 1]
-        for j, c2 in enumerate(s2):
-            insertions = previous_row[j + 1] +weights[j+1]
-            # j+1 instead of j since previous_row and current_row are one character longer
-            deletions = current_row[j] + weights[j]
-            # than s2
-            substitutions = previous_row[j] + (c1 != c2) * weights[j]
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-    
-    return previous_row[-1]
+def custom_levenshtein(s1, s2, weights):
+	n_1 = len(s1)
+	#print("PR1", previous_row)
+	previous_row = [0.0] + list(weights[:(n_1+1)])
 
+	for i in range(0, n_1+1):
+		previous_row[i + 1] = previous_row[i] + previous_row[i + 1]
+
+	previous_row = previous_row[:(n_1+2)]
+	first_row = list(previous_row)
+
+	for i, c1 in enumerate(s1):
+
+		current_row = [first_row[i+1]]
+		for j, c2 in enumerate(s2):
+			weight_i = weights[j+1]
+			insertions = previous_row[j + 1] + weight_i
+			deletions = current_row[j] + weights[j]
+			substitutions = previous_row[j] + (c1 != c2) * weights[j]
+			current_row.append(min(insertions, deletions, substitutions))
+		previous_row = current_row
+	return previous_row[-1]
