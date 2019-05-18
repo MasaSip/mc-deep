@@ -18,54 +18,54 @@ One difficulty of mini-batch training of sequence-to-sequence is that sequences 
 """
 
 params = [
-    {
-        'skip_training': False,
-        'n_epochs': 1,
-        'teacher_forcing_ratio': 0.5,
-        'losses_filename': 'exports/t1_losses.csv',
-        'losses_plot_filename': 'exports/t1_losses.png',
-        'encoder_filename': 'exports/t1_mc_diippi_encoder.pth',
-        'decoder_filename': 'exports/t1_mc_diippi_decoder.pth',
-        'do_save': 'yes',
-        'rap_filename': 'exports/t1_rap.txt',
-        'rap_length': 100
-    },
-     {
-        'skip_training': False,
-        'n_epochs': 2,
-        'teacher_forcing_ratio': 0.5,
-        'losses_filename': 'exports/t2_losses.csv',
-        'losses_plot_filename': 'exports/t2_losses.png',
-        'encoder_filename': 'exports/t2_mc_diippi_encoder.pth',
-        'decoder_filename': 'exports/t2_mc_diippi_decoder.pth',
-        'do_save': 'yes',
-        'rap_filename': 't2_rap.txt',
-        'rap_length': 400
-    },
-     {
-        'skip_training': False,
-        'n_epochs': 20,
-        'teacher_forcing_ratio': 0.5,
-        'losses_filename': 'exports/t3_losses.csv',
-        'losses_plot_filename': 'exports/t3_losses.png',
-        'encoder_filename': 'exports/t3_mc_diippi_encoder.pth',
-        'decoder_filename': 'exports/t3_mc_diippi_decoder.pth',
-        'do_save': 'yes',
-        'rap_filename': 't3_rap.txt',
-        'rap_length': 400
-    },
-     {
-        'skip_training': False,
-        'n_epochs': 40,
-        'teacher_forcing_ratio': 0.5,
-        'losses_filename': 'exports/t4_losses.csv',
-        'losses_plot_filename': 'exports/t4_losses.png',
-        'encoder_filename': 'exports/t4_mc_diippi_encoder.pth',
-        'decoder_filename': 'exports/t4_mc_diippi_decoder.pth',
-        'do_save': 'yes',
-        'rap_filename': 't4_rap.txt',
-        'rap_length': 400
-    },
+    # {
+    #     'skip_training': False,
+    #     'n_epochs': 1,
+    #     'teacher_forcing_ratio': 0.5,
+    #     'losses_filename': 'exports/t1_losses.csv',
+    #     'losses_plot_filename': 'exports/t1_losses.png',
+    #     'encoder_filename': 'exports/t1_mc_diippi_encoder.pth',
+    #     'decoder_filename': 'exports/t1_mc_diippi_decoder.pth',
+    #     'do_save': 'yes',
+    #     'rap_filename': 'exports/t1_rap.txt',
+    #     'rap_length': 100
+    # },
+    #  {
+    #     'skip_training': False,
+    #     'n_epochs': 2,
+    #     'teacher_forcing_ratio': 0.5,
+    #     'losses_filename': 'exports/t2_losses.csv',
+    #     'losses_plot_filename': 'exports/t2_losses.png',
+    #     'encoder_filename': 'exports/t2_mc_diippi_encoder.pth',
+    #     'decoder_filename': 'exports/t2_mc_diippi_decoder.pth',
+    #     'do_save': 'yes',
+    #     'rap_filename': 't2_rap.txt',
+    #     'rap_length': 400
+    # },
+    #  {
+    #     'skip_training': False,
+    #     'n_epochs': 20,
+    #     'teacher_forcing_ratio': 0.5,
+    #     'losses_filename': 'exports/t3_losses.csv',
+    #     'losses_plot_filename': 'exports/t3_losses.png',
+    #     'encoder_filename': 'exports/t3_mc_diippi_encoder.pth',
+    #     'decoder_filename': 'exports/t3_mc_diippi_decoder.pth',
+    #     'do_save': 'yes',
+    #     'rap_filename': 't3_rap.txt',
+    #     'rap_length': 400
+    # },
+    #  {
+    #     'skip_training': False,
+    #     'n_epochs': 40,
+    #     'teacher_forcing_ratio': 0.5,
+    #     'losses_filename': 'exports/t4_losses.csv',
+    #     'losses_plot_filename': 'exports/t4_losses.png',
+    #     'encoder_filename': 'exports/t4_mc_diippi_encoder.pth',
+    #     'decoder_filename': 'exports/t4_mc_diippi_decoder.pth',
+    #     'do_save': 'yes',
+    #     'rap_filename': 't4_rap.txt',
+    #     'rap_length': 400
+    # },
      {
         'skip_training': False,
         'n_epochs': 70,
@@ -576,8 +576,7 @@ def McDiippi(
 
     if not skip_training:
         np.savetxt(losses_filename, losses)
-    else:
-        losses = np.genfromtxt(losses_filename)
+
     plt.figure()
     plt.plot(losses)
     plt.show()
@@ -715,11 +714,11 @@ def McDiippi(
     rap_formated = re.sub(' {2,}', ' ',rap_formated)
     print(rap_formated)
 
+    print(os.getcwd())
+    print(rap_filename)
     f = open(rap_filename, 'w')
     f.writelines(rap_formated.split('\n'))
     f.close()
-
-    rap_formated = 'moi /n hei'
 
     print('\nEvaluate on test data:')
     print('-----------------------------')
