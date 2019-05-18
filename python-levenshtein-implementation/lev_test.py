@@ -11,7 +11,7 @@ r = list(set(rhyme.split()))
 smallest_d = 1000.0
 smallest = ""
 
-r = list(np.array(r)[:600])
+r = list(np.array(r)[:400])
 N = len(r)
 print("N", N)
 D = np.zeros((N,N))
@@ -40,7 +40,8 @@ print(D-D.T, np.count_nonzero(absD / Ddelta < EPSILON),
 from sklearn.datasets import load_digits
 from sklearn.manifold import MDS
 
-embedding = MDS(n_components=6, dissimilarity='precomputed')
+DIMENSIONS = 2
+embedding = MDS(n_components=DIMENSIONS, dissimilarity='precomputed')
 X_transformed = embedding.fit_transform(D)
 
 print(X_transformed)
@@ -81,7 +82,7 @@ while True:
 	k_weights = np.array(k_weights)
 	k_weights = list(k_weights / np.sum(k_weights))
 
-	coords_0 = np.zeros(2)
+	coords_0 = np.zeros(DIMENSIONS)
 	for i, weight in enumerate(k_weights):
 		j = k_closest[i]
 		print(r[j], weight)
