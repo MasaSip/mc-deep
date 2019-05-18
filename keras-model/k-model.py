@@ -1,5 +1,5 @@
 # Small LSTM Network to Generate Text for Alice in Wonderland
-import numpy
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -7,6 +7,7 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 # load ascii text and covert to lowercase
+'''
 filename = "wonderland.txt"
 raw_text = open(filename).read()
 raw_text = raw_text.lower()
@@ -30,11 +31,20 @@ for i in range(0, n_chars - seq_length, 1):
 n_patterns = len(dataX)
 print "Total Patterns: ", n_patterns
 # reshape X to be [samples, time steps, features]
-X = numpy.reshape(dataX, (n_patterns, seq_length, 1))
+X = np.reshape(dataX, (n_patterns, seq_length, 1))
 # normalize
 X = X / float(n_vocab)
 # one hot encode the output variable
 y = np_utils.to_categorical(dataY)
+
+'''
+
+
+X = np.load("keras-model/X.npy")
+Y = np.load("keras-model/Y.npy")
+y = np_utils.to_categorical(Y)
+
+print(X.shape,Y.shape)
 # define the LSTM model
 model = Sequential()
 model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2])))

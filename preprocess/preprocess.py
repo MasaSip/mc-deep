@@ -25,16 +25,17 @@ print(np.max(data_indices))
 
 input_length = 20
 output_length = 1
+samples = N-input_length
+features = 1
 
-datapoints = N-input_length
+X = np.zeros((samples, input_length, features)).astype(int)
+Y = np.zeros(samples).astype(int)
 
-X = np.zeros((input_length, datapoints)).astype(int)
-Y = np.zeros((output_length, datapoints)).astype(int)
-
-for i in range(datapoints):
+for i in range(samples):
 	for j in range(input_length):
-		X[j, i] = data_indices[i+j]
-		Y[0, i] = data_indices[i+j+1]
+		X[i, j, 0] = data_indices[i+j]
+	category = data_indices[i+input_length]
+	Y[i] = data_indices[i+input_length]
 
 
 print(X)
@@ -42,3 +43,6 @@ print(Y)
 
 np.save("keras-model/X.npy", X)
 np.save("keras-model/Y.npy", Y)
+
+U = np.array(unique_words)
+np.save("keras-model/U.npy", U)
