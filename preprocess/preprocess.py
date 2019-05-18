@@ -39,3 +39,6 @@ for i in range(datapoints):
 
 print(X)
 print(Y)
+
+np.save("keras-model/X.npy", X)
+np.save("keras-model/Y.npy", Y)
