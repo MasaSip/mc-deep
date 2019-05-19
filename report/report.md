@@ -1,7 +1,7 @@
 
 # Rap lyrics generation using LSTM and custom embeddings
 
-# 1. Problem and data description
+## 1. Problem and data description
 
 The problem is to create a freestyle rap generator in Finnish. When completed, the rap bot should be able to continue the rap based on a given first line. The generated sentence should ideally both rhyme and be meaningful. For that, a measure of rhyming words needs to be created as well as how well two words rhyme, and embed that information into words.
 
@@ -18,7 +18,7 @@ The data consisted of 18 480 lines (95 048 words) of Finnish rap lyrics. The lyr
 [^1]: [https://mining4meaning.com/2017/06/30/rap-riimien-arvattavuudesta-ja-alkusoinnuista/](https://mining4meaning.com/2017/06/30/rap-riimien-arvattavuudesta-ja-alkusoinnuista/)
 
 
-# Section 2. Method
+## Section 2. Method
 
 The data was preprocessed into sequences of 20 input words corresponding to a single matching output word. The task of the model is to predict the next word according to the previous words given.
 
@@ -41,7 +41,7 @@ $$
 
 Weighted Levenstein distance denotes that custom weights are used for fine-tuning the edit distance. To mimic rhyming, we used exponentially decaying weigh defined as:
 
-1/2*(-0.5*i)
+\[ w_i = 1/2^{-0.5*i} \]
 
 Where i is the index of the letter. Two distance matrixes were computed, normal for measuring the similarity of the meaning of the word and reverse for measuring the rhyming of the word. The reverse indexes mean that the last letter of the word was at index position i=0. The computational implementation of Levenshtein distance was inspired by Wagner-Fischer algorithm https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm 
 
@@ -49,11 +49,22 @@ XXX TÄHÄN KUVA DEMOAMAAN ETÄISYYTTÄ
 
 Next, we processed the whole dataset of n=23990 unique words to create a nxn matrix with elements M(i,j) denoting the Levenshtein distance between words i and j. For faster computation, the part of computing distance matrix was implemented in Scala. The size of the matrix was 4.6GB and was not included in version control.
 
-Next, PCA was computed to both distance matrixes in order compress the information. These were saved as embedding-beginning.npy, (23990, 64)
- and embedding-end.npy (23990, 63)
-
+Next, PCA was computed to both distance matrixes in order compress the information. These were saved as embedding-beginning.npy, (23990, 64) and embedding-end.npy (23990, 63)
 
 After concatenating the embedding matrixes, we gained an custom embedding layer to be used in our model in between each LSTM cell.
+
+
+## Results
+
+Since an important goal of the project was to produced rhyming patterns, some kind of a metric for rhyming was needed. We decided to measure rhyming with the Levenshtein distance variant we also used for the embedding.
+
+In the training data, consecutive last words of a row had an average distance of 0.9876374414207171, while random word pairs in the had an average distance of 1.4579899821773632. This was expected, as we had observed that rhyming words tended to be close to one another. For automatically generated text, a lower average distance would suggest a better model.
+
+Neither of our models reached as low Levenshtein distances between as the training data. The values were X for the 
+
+
+## Experiments
+
 
 
 
