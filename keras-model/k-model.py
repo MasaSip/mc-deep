@@ -1,14 +1,14 @@
-# Small LSTM Network to Generate Text for Alice in Wonderland
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import LSTM
+from keras.layers import Embedding
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
 
-X = np.load("keras-model/X.npy")
+X = np.load("keras-model/X.npy")[:,:,0]
 Y = np.load("keras-model/Y.npy")
 y = np_utils.to_categorical(Y)
 
@@ -25,7 +25,8 @@ e = Embedding(vocab_size, 128, weights=[embedding_matrix], input_length=20, trai
 print(X.shape,Y.shape)
 # define the LSTM model
 model = Sequential()
-model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2])))
+model.add(e)
+model.add(LSTM(256))
 model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 # log-loss
