@@ -59,11 +59,13 @@ Since an important goal of the project was to produced rhyming patterns, some ki
 
 In the training data, consecutive last words of a row had an average distance of 0.9876374414207171, while random word pairs in the had an average distance of 1.4579899821773632. This was expected, as we had observed that rhyming words tended to be close to one another. For automatically generated text, a lower average distance would suggest a better model.
 
-Neither of our models reached as low Levenshtein distances between as the training data. The values were X for the 
+Neither of our models reached as low Levenshtein distances between as the training data. The values were 1.4811 for the custom embedding model and . The results were somewhat unexpected, as they are virtually equal to random sampling.
 
+As for the meaningfulness of the lyrics, both of the models produced equally nonsensical sentences. No overfitted meaningful sentences appeared either. However, the verses were mostly properly formatted in both models.
 
 ## Experiments
 
+We tried using fully connected classification (no word embedding, just class labels as inputs and outputs). For a subset of data, that produced overfitted results. For the full dataset, the model was too large to be run in reasonable time.
 
 ## Code and Demos
 
@@ -74,6 +76,10 @@ The full source of the project can be found at [Github.com](github.com). Under t
 ![Screenshot of the demo](demozoom1.png)
 
 ![Screenshot of the demo](demozoom2.png)
+
+## Footnotes
+
+
 
 # INSTRUCTIOns
 
