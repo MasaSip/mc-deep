@@ -6,12 +6,25 @@ from keras.layers import LSTM
 from keras.layers import Embedding
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
+import keras
+from math import log
 
-prefix = '../'
+prefix = ""#'../'
+toydata = False
+if toydata:
+	X = np.load(prefix + "keras-model/X_0.npy")[:500,:]
+	Y = np.load(prefix + "keras-model/Y_0.npy")[:500,:]
+else:
+	X = np.load(prefix + "keras-model/X.npy")[:,:,0]
+	Y = np.load(prefix + "keras-model/Y.npy")
 
-X = np.load(prefix + "keras-model/X.npy")[:,:,0]
-Y = np.load(prefix + "keras-model/Y.npy")
-y = np_utils.to_categorical(Y)
+#log(0)
+print("To categorical")
+#y = np_utils.to_categorical(Y)
+print("done")
+#print(X.shape, Y.shape, y.shape)
+
+print(Y)
 
 linebreak_vec = np.zeros((23991,1))
 linebreak_vec[127] = 1.0
@@ -37,12 +50,15 @@ model.add(LSTM(256))
 model.add(Dropout(0.1))
 model.add(Dense(128, activation='linear'))
 
-d = Dense(y.shape[1], activation='softmax', trainable=False)
+print(23991)
+d = Dense(23991, activation='softmax', trainable=False)
 model.add(d)
 
 print(d.get_config())
 print(d.get_weights())
-d.set_weights([embedding_matrix.T, np.zeros(23991)])
+U_log = np.load(prefix + "keras-model/U_log.npy")
+
+d.set_weights([embedding_matrix.T, U_log * 0.5])
 # log-loss
 #filename = "data/keras-checkpoints/weights-improvement-02-8.0520.hdf5"
 #model.load_weights(filename)
@@ -53,5 +69,5 @@ filepath = prefix + "data/keras-checkpoints/weights-improvement-{epoch:02d}-{los
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 # fit the model
-model.fit(X, y, epochs=20, batch_size=128, callbacks=callbacks_list)
+model.fit(X, Y, epochs=20, batch_size=128, callbacks=callbacks_list)
 
