@@ -7,13 +7,14 @@ from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
+prefix = '../'
 
-X = np.load("keras-model/X.npy")
-Y = np.load("keras-model/Y.npy")
+X = np.load(prefix + "keras-model/X.npy")
+Y = np.load(prefix + "keras-model/Y.npy")
 y = np_utils.to_categorical(Y)
 
-e_beginning = np.load("data/embeddings/embedding-beginning.npy")
-e_end = np.load("data/embeddings/embedding-end.npy")
+e_beginning = np.load(prefix + "data/embeddings/embedding-beginning.npy")
+e_end = np.load(prefix + "data/embeddings/embedding-end.npy")
 embedding_matrix = np.concatenate((e_beginning, e_end), axis=1)
 vocab_size = len(embedding_matrix)
 
