@@ -30,6 +30,9 @@ We chose to implement LSTM structure using Keras, because it provides higher abs
 
 [^2]: https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
 
+The whole model consisted of 20 sequental LSTM and mid processing sells. The architecture of the model is presented in depiction below.
+
+![LSTM model](LSTM_model.png)
 
 A weighted version of the Levenshtein distance, which also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word. Levenshtein distance between words *v* and *w* can be formal expressed as:
 
@@ -44,7 +47,6 @@ $$w_i = 1/2^{-0.5 \cdot i}$$
 
 Where i is the index of the letter. Two distance matrixes were computed, normal for measuring the similarity of the meaning of the word and reverse for measuring the rhyming of the word. The reverse indexes mean that the last letter of the word was at index position i=0. The computational implementation of Levenshtein distance was inspired by the [Wagner-Fischer algorithm](https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm).
 
-XXX TÄHÄN KUVA DEMOAMAAN ETÄISYYTTÄ
 
 Next, we processed the whole dataset of n=23990 unique words to create a nxn matrix with elements M(i,j) denoting the Levenshtein distance between words i and j. For faster computation, the part of computing distance matrix was implemented in Scala. The size of the matrix was 4.6GB and was not included in version control.
 
@@ -61,11 +63,13 @@ In the training data, consecutive last words of a row had an average distance of
 
 Neither of our models reached as low Levenshtein distances between as the training data. The values were 1.4811 for the custom embedding model and  1.3595 for the random embedding. The results at the lowest validation loss (for both models around 7) were somewhat unexpected, as they are virtually equal to random sampling, the random embedding being even lower. 
 
-As for the meaningfulness of the lyrics, both of the models produced equally nonsensical sentences. No overfitted meaningful sentences appeared either. However, the verses were mostly properly formatted in both models.
+As for the meaningfulness of the lyrics, both of the models produced relatively nonsensical sentences. No overfitted meaningful sentences appeared either. However, the verses were mostly properly formatted in both models.
 
 ## Experiments
 
 We tried using fully connected classification (no word embedding, just class labels as inputs and outputs). For a subset of data, that produced overfitted results. For the full dataset, the model was too large to be run in reasonable time.
+
+Due to time constraints, we were not able to compare the performance of LSTM and GRU models.
 
 ## Conclusion
 
@@ -75,7 +79,7 @@ These distances were retained in the word embedding as well. However, this did n
 
 ## Code and Demos
 
-The full source of the project can be found at [Github.com](github.com). Under the demos folder there is a visual demo that shows how the rhyme embedding works. Rhyming words can be seen clustering in the scatter plot. The demo can be run under the name embedding_demo.py.
+The full source of the project can be found at [https://github.com/MasaSip/mc-diippi](https://github.com/MasaSip/mc-diippi). Under the demos folder there is a visual demo that shows how the rhyme embedding works. Rhyming words can be seen clustering in the scatter plot. The demo can be run under the name embedding_demo.py.
 
 
 ![Screenshot of the demo](demo.png)
