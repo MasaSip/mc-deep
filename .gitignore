@@ -2,6 +2,7 @@
 __pycache__/
 exports
 *.pth
+*.hdf5
 data/distance_data/beginning/distanceMatrix*.csv
 data/distance_data/beginning/*.npy
 data/distance_data/end/distanceMatrix*.csv
