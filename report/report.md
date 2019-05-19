@@ -40,7 +40,7 @@ $$
 
 Weighted Levenstein distance denotes that custom weights are used for fine-tuning the edit distance. To mimic rhyming, we used exponentially decaying weigh defined as:
 
-\[ w_i = 1/2^{-0.5*i} \]
+$$w_i = 1/2^{-0.5 \cdot i}$$
 
 Where i is the index of the letter. Two distance matrixes were computed, normal for measuring the similarity of the meaning of the word and reverse for measuring the rhyming of the word. The reverse indexes mean that the last letter of the word was at index position i=0. The computational implementation of Levenshtein distance was inspired by Wagner-Fischer algorithm https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm 
 
