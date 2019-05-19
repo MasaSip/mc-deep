@@ -34,7 +34,6 @@ We chose to implement LSTM structure using Keras, because it provides higher abs
 A weighted version of the Levenshtein distance, which also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word. Levenshtein distance between words *v* and *w* can be formal expressed as:
 
 
-
 $$
 {\displaystyle \qquad \operatorname {lev} _{v,w}(i,j)={\begin{cases}\max(i,j)&{\text{ if }}\min(i,j)=0,\\\min {\begin{cases}\operatorname {lev} _{v,w}(i-1,j)+1\\\operatorname {lev} _{v,w}(i,j-1)+1\\\operatorname {lev} _{v,w}(i-1,j-1)+1_{(v_{i}\neq w_{j})}\end{cases}}&{\text{ otherwise.}}\end{cases}}}
 $$
@@ -66,7 +65,9 @@ Neither of our models reached as low Levenshtein distances between as the traini
 ## Experiments
 
 
+## Code and Demos
 
+The full source of the project can be found at [Github.com](github.com). Under the demos folder there is a visual demo that shows how the rhyme embedding works. Rhyming words can be seen clustering in the scatter plot. The demo can be run under the name embedding_demo.py.
 
 
 # INSTRUCTIOns
