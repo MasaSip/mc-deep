@@ -1,1 +1,1 @@
-# Save Keras checkpoints here
+# Keras will save model checkpoints here
