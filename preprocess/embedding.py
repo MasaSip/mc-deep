@@ -14,6 +14,7 @@ D_small = D[:MAX_DIM, :MAX_DIM_Y]
 print("Normalize")
 D_small = D_small / np.max(D_small)
 print("Nonlinearize")
+# A non-linearity is used to emphasize words with high similarity
 D_small = -(D_small ** 0.25) +1
 D_small = D_small
 

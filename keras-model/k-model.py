@@ -7,16 +7,18 @@ from keras.layers import Embedding
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 
+prefix = '../'
 
-X = np.load("keras-model/X.npy")[:,:,0]
-Y = np.load("keras-model/Y.npy")
+X = np.load(prefix + "keras-model/X.npy")[:,:,0]
+Y = np.load(prefix + "keras-model/Y.npy")
 y = np_utils.to_categorical(Y)
 
 linebreak_vec = np.zeros((23991,1))
 linebreak_vec[127] = 1.0
 
-e_beginning = np.load("data/embeddings/embedding-beginning.npy")
-e_end = np.load("data/embeddings/embedding-end.npy")[:,:63]
+e_beginning = np.load(prefix + "data/embeddings/embedding-beginning.npy")
+e_end = np.load(prefix + "data/embeddings/embedding-end.npy")[:,:63]
+
 embedding_matrix = np.concatenate((e_beginning, e_end), axis=1)
 embedding_matrix = np.concatenate((embedding_matrix, np.zeros((1,127))), axis=0)
 embedding_matrix = np.concatenate((embedding_matrix, linebreak_vec), axis=1)
@@ -47,7 +49,7 @@ d.set_weights([embedding_matrix.T, np.zeros(23991)])
 
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 # define the checkpoint
-filepath="data/keras-checkpoints/weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
+filepath = prefix + "data/keras-checkpoints/weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 # fit the model
