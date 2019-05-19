@@ -1,10 +1,10 @@
 import re
 import numpy as np
 
-text = open('demos/embedding_demo/heikkikuula.txt').read()
+text = open('demos/embedding_demo/heikkikuula.txt',encoding='utf8').read()
 
 #text = re.sub(r'[^äö]', r'', text)
-text = re.sub(r"[^a-zA-Z \n]", r"", text)
+text = re.sub(r"[^a-zA-ZåäöÅÄÖ \n]", r"", text)
 text = re.sub(r"\n", r" RIVINVAIHTO ", text)
 text = text.split(' ')
 N = len(text)
