@@ -31,7 +31,7 @@ We chose to implement LSTM structure using Keras, because it provides higher abs
 [^2]: https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
 
 
-Weighted Levenshtein distance, also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word. Levenshtein distance between words *v* and *w* can be formal expressed as:
+A weighted version of the Levenshtein distance, which also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word. Levenshtein distance between words *v* and *w* can be formal expressed as:
 
 
 
@@ -56,6 +56,9 @@ Next, PCA was computed to both distance matrixes in order compress the informati
 After concatenating the embedding matrixes, we gained an custom embedding layer to be used in our model in between each LSTM cell.
 
 
+
+
+# INSTRUCTIOns
 
 2.1. Method description. (2 pts)
 
