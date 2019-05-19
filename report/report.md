@@ -13,7 +13,7 @@ How does the length of an input sequence effect on the ability of RNN to generat
 Which RNN structure is most suitable for generating rap lyrics?
 How does the use of a rhyme heuristic effect on the performance of an RNN model in generating rap lyrics?
 
-The data consisted of 18 480 lines (95 048 words) of Finnish rap lyrics. The lyrics were retrieved from [genius.com](https://genius.com). The artists were chosen based that their lyrics are known to favour rhyming lyrics i.e. their lyrics are also predictable [^1] The chosen artists were Heikki Kuula, Ruger Hauer, Stig, Brädi, Are, Petri Nygård, Paperi T, Stepa, Tuuttimörkö, Iso H, and Raptori.
+The data consisted of 18 480 lines (95 048 words) of Finnish rap lyrics. The lyrics were retrieved from [genius.com](https://genius.com). The artists were chosen based that their lyrics are known to favour rhyming lyrics i.e. their lyrics are also predictable[^1] The chosen artists were Heikki Kuula, Ruger Hauer, Stig, Brädi, Are, Petri Nygård, Paperi T, Stepa, Tuuttimörkö, Iso H, and Raptori.
 
 [^1]: [https://mining4meaning.com/2017/06/30/rap-riimien-arvattavuudesta-ja-alkusoinnuista/](https://mining4meaning.com/2017/06/30/rap-riimien-arvattavuudesta-ja-alkusoinnuista/)
 
@@ -23,15 +23,21 @@ The data consisted of 18 480 lines (95 048 words) of Finnish rap lyrics. The lyr
 The data was preprocessed into sequences of 20 input words corresponding to a single matching output word. The task of the model is to predict the next word according to the previous words given.
 
 Our model consists of 20 long short-term memory (LSTM) units. Their structure was also covered in the lectures. Hidden size of 256 was used with a 0.1 dropout between the layers. The model was trained with logarithmic loss and Adam optimizer with batches of 128.
-![LSTM cell](LSTM cell.png)
 
-We chose to implement LSTM structure using Keras, because it provides higher abstraction than Pytorch for creating a language model. The structure of the model was inspired by a blog post of Jason Brownlee
-https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
+![LSTM cell](LSTM_cell.png)
+
+We chose to implement LSTM structure using Keras, because it provides higher abstraction than Pytorch for creating a language model. The structure of the model was inspired by a blog post of Jason Brownlee[^2]
+
+[^2]: https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
 
 
 Weighted Levenshtein distance, also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word.
 
 Kaava: https://en.wikipedia.org/wiki/Levenshtein_distance 
+
+$$
+{\displaystyle \qquad \operatorname {lev} _{a,b}(i,j)={\begin{cases}\max(i,j)&{\text{ if }}\min(i,j)=0,\\\min {\begin{cases}\operatorname {lev} _{a,b}(i-1,j)+1\\\operatorname {lev} _{a,b}(i,j-1)+1\\\operatorname {lev} _{a,b}(i-1,j-1)+1_{(a_{i}\neq b_{j})}\end{cases}}&{\text{ otherwise.}}\end{cases}}}
+$$
 
 Weighted Levenstein distance denotes that custom weights are used for fine-tuning the edit distance. To mimic rhyming, we used exponentially decaying weigh defined as:
 
