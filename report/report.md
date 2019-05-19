@@ -31,12 +31,12 @@ We chose to implement LSTM structure using Keras, because it provides higher abs
 [^2]: https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/
 
 
-Weighted Levenshtein distance, also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word.
+Weighted Levenshtein distance, also known as edit distance, was used as a heuristic of rhyming. Levenshtein distance is a measure of similarity of two words. The distance tells the number of insertions, deletion or substitutions needed to transform the word into another. Thus, the more similar the words are, the smaller the distance is. The distance is 0 only if the words are the same and it can be maximum the amount of letters in a longer word. Levenshtein distance between word $$ax^2+bx+c=0$$  can be formal $$\inline p={1\over q}$$ sdfsdf
 
-Kaava: https://en.wikipedia.org/wiki/Levenshtein_distance 
+
 
 $$
-{\displaystyle \qquad \operatorname {lev} _{a,b}(i,j)={\begin{cases}\max(i,j)&{\text{ if }}\min(i,j)=0,\\\min {\begin{cases}\operatorname {lev} _{a,b}(i-1,j)+1\\\operatorname {lev} _{a,b}(i,j-1)+1\\\operatorname {lev} _{a,b}(i-1,j-1)+1_{(a_{i}\neq b_{j})}\end{cases}}&{\text{ otherwise.}}\end{cases}}}
+{\displaystyle \qquad \operatorname {lev} _{v,w}(i,j)={\begin{cases}\max(i,j)&{\text{ if }}\min(i,j)=0,\\\min {\begin{cases}\operatorname {lev} _{v,w}(i-1,j)+1\\\operatorname {lev} _{v,w}(i,j-1)+1\\\operatorname {lev} _{v,w}(i-1,j-1)+1_{(v_{i}\neq w_{j})}\end{cases}}&{\text{ otherwise.}}\end{cases}}}
 $$
 
 Weighted Levenstein distance denotes that custom weights are used for fine-tuning the edit distance. To mimic rhyming, we used exponentially decaying weigh defined as:
