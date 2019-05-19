@@ -12,9 +12,14 @@ X = np.load("keras-model/X.npy")[:,:,0]
 Y = np.load("keras-model/Y.npy")
 y = np_utils.to_categorical(Y)
 
+linebreak_vec = np.zeros((23991,1))
+linebreak_vec[127] = 1.0
+
 e_beginning = np.load("data/embeddings/embedding-beginning.npy")
-e_end = np.load("data/embeddings/embedding-end.npy")
+e_end = np.load("data/embeddings/embedding-end.npy")[:,:63]
 embedding_matrix = np.concatenate((e_beginning, e_end), axis=1)
+embedding_matrix = np.concatenate((embedding_matrix, np.zeros((1,127))), axis=0)
+embedding_matrix = np.concatenate((embedding_matrix, linebreak_vec), axis=1)
 vocab_size = len(embedding_matrix)
 
 print(embedding_matrix.shape, vocab_size)
@@ -27,9 +32,19 @@ print(X.shape,Y.shape)
 model = Sequential()
 model.add(e)
 model.add(LSTM(256))
-model.add(Dropout(0.2))
-model.add(Dense(y.shape[1], activation='softmax'))
+model.add(Dropout(0.1))
+model.add(Dense(128, activation='linear'))
+
+d = Dense(y.shape[1], activation='softmax', trainable=False)
+model.add(d)
+
+print(d.get_config())
+print(d.get_weights())
+d.set_weights([embedding_matrix.T, np.zeros(23991)])
 # log-loss
+#filename = "data/keras-checkpoints/weights-improvement-02-8.0520.hdf5"
+#model.load_weights(filename)
+
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 # define the checkpoint
 filepath="data/keras-checkpoints/weights-improvement-{epoch:02d}-{loss:.4f}.hdf5"
@@ -37,3 +52,4 @@ checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only
 callbacks_list = [checkpoint]
 # fit the model
 model.fit(X, y, epochs=20, batch_size=128, callbacks=callbacks_list)
+
