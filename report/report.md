@@ -69,6 +69,11 @@ Neither of our models reached as low Levenshtein distances between as the traini
 
 The full source of the project can be found at [Github.com](github.com). Under the demos folder there is a visual demo that shows how the rhyme embedding works. Rhyming words can be seen clustering in the scatter plot. The demo can be run under the name embedding_demo.py.
 
+![Screenshot of the demo](demo.png)
+
+![Screenshot of the demo](demozoom1.png)
+
+![Screenshot of the demo](demozoom2.png)
 
 # INSTRUCTIOns
 
