@@ -72,7 +72,7 @@ Due to time constraints, we were not able to compare the performance of LSTM and
 
 The modified Levenshtein distance was a decent measure of rhyming. This could be seen both intuitively in the visualizations, as well as in the consecutive last words having a smaller average distance.
 
-These distances were retained in the word embedding as well. However, this did not help the model build rhyming patterns. This might have been due to eg. a small number of occurences per word, too few examples of any single rhyming pattern, or a number of other reasons.
+These distances were retained in the word embedding as well (see data/closest1000.txt for reference). However, this did not help the model build rhyming patterns. This might have been due to eg. a small number of occurences per word, too few examples of any single rhyming pattern, or a number of other reasons.
 
 ## Code and Demos
 
