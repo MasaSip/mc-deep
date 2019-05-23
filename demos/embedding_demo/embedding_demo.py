@@ -1,3 +1,7 @@
+# EMBEDDING DEMO
+# RUNS FOR A LITTLE WHILE, THE LOOP GOES UNTIL 400
+# PRINTS OUT EVERY 100
+
 from custom_levenshtein import levenshtein as distance
 import numpy as np
 
